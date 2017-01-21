@@ -17,8 +17,7 @@ public class CharacterBase : MonoBehaviour {
 	}
 
     public int getLife() { return currentLife; }
-    public int getMaxLife() { return maxLife; }
-
+	
     public void onDamage (int damage)
     {
         if (currentLife <= damage)

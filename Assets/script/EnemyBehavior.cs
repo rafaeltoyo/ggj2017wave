@@ -25,12 +25,7 @@ public class EnemyBehavior : CharacterBase
     {
         enemyTransform = GetComponent<Transform>();
         rigidBody = GetComponent<Rigidbody2D>();
-        characterCollider2 = GetComponent<CapsuleCollider2D>();     
-    }
-
-    private void Awake()
-    {
-        maxLife = 20;
+        characterCollider2 = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame

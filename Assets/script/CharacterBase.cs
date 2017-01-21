@@ -3,13 +3,18 @@ using System.Collections;
 
 public class CharacterBase : MonoBehaviour {
 
-    [SerializeField]
     protected int currentLife;
+    [SerializeField]
     protected int maxLife;
 
     public bool tookhit = false;
 
     protected BoxCollider2D characterCollider;
+
+    void Awake ()
+    {
+        currentLife = maxLife;
+    }
 
 	// Use this for initialization
 	void Start () {

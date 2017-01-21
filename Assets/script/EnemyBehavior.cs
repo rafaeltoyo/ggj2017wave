@@ -28,30 +28,50 @@ public class EnemyBehavior : CharacterBase
         characterCollider2 = GetComponent<CapsuleCollider2D>();     
     }
 
-    private void Awake()
-    {
-        maxLife = 20;
-    }
-
     // Update is called once per frame
     void FixedUpdate()
     {
         if (goLeft)
         {
-            enemyTransform.rotation = new Quaternion(0, 0, 0, 0);
+            GetComponent<SpriteRenderer>().flipX = true;
             rigidBody.velocity = new Vector2(-velocidade, rigidBody.velocity.y);
         }
         else
         {
-            enemyTransform.rotation = new Quaternion(0, 180, 0, 0);
+            GetComponent<SpriteRenderer>().flipX = false;
             rigidBody.velocity = new Vector2(velocidade, rigidBody.velocity.y);
         }
-        if (goLeft && !possivelIrEsquerda())
+        // Flipar o personagem se possivel
+        if (goLeft && checarFimDeCurso(-1))
             goLeft = false;
-        else if (!goLeft && !possivelIrDireita())
+        else if (!goLeft && checarFimDeCurso(1))
             goLeft = true;
     }
 
+    // direcao -1 = Dir / 1 = Esq
+    public bool checarFimDeCurso(int direcao) // TRUE = FIM
+    {
+        Vector3 origemRaycast = transform.position;
+        origemRaycast = new Vector3(origemRaycast.x + direcao*(characterCollider2.bounds.size.x/2 + 0.1f), origemRaycast.y, origemRaycast.z);
+
+        RaycastHit2D hitSuperior = Physics2D.Raycast(origemRaycast, Vector3.up, characterCollider2.bounds.size.y/2 + 0.2f);
+        RaycastHit2D hitInferior = Physics2D.Raycast(origemRaycast, Vector3.down, characterCollider2.bounds.size.y / 2 + 0.2f);
+        RaycastHit2D hitFrente = Physics2D.Raycast(origemRaycast, new Vector3(direcao,0,0), 0.1f);
+
+        Debug.DrawRay(origemRaycast, Vector3.up, Color.yellow);
+        Debug.DrawRay(origemRaycast, Vector3.down, Color.yellow);
+        Debug.DrawRay(origemRaycast, new Vector3(direcao,0,0), Color.yellow);
+
+        if (hitSuperior.transform != null && !validarTag(hitSuperior))
+            return true;
+        if (hitInferior.transform == null || validarTag(hitInferior))
+            return true;
+        if (hitFrente.transform != null && !validarTag(hitFrente))
+            return true;
+
+        return false;
+    }
+    /*
     public bool possivelIrDireita()
     {
         Vector3 origem = transform.position;
@@ -143,7 +163,7 @@ public class EnemyBehavior : CharacterBase
             }
         }
     }
-
+    */
     public bool validarTag(RaycastHit2D hit)
     {
         string tag = (hit.transform != null ? hit.collider.gameObject.tag : string.Empty);

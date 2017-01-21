@@ -21,7 +21,7 @@ public class ProjectileBehaviour : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if(!coll.gameObject.tag.Equals("Projectile"))
+        if(!coll.gameObject.tag.Equals("Projectile")&&!coll.gameObject.tag.Equals("Player"))
             Destroy(gameObject);
     }
 }

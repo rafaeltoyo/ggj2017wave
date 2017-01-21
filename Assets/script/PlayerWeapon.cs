@@ -25,7 +25,7 @@ public class PlayerWeapon : MonoBehaviour {
     void Update() {
         updateWeaponPosition();
 
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetMouseButtonDown(0))
         {
             Instantiate(projectile, playerWeapon.transform.position, Quaternion.Euler(0,0,Mathf.Atan2(angle.y,angle.x) * Mathf.Rad2Deg));
         }

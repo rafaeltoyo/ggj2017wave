@@ -45,7 +45,7 @@ public class PlayerController : CharacterBase
         #region Pulo
 
         IsGrounded = Physics2D.Linecast(transform.position, groundcheck.position, 1 << LayerMask.NameToLayer("Ground")); ;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, 0.1f); ;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, 0.1f);
         if (Input.GetKey(KeyCode.W) && IsGrounded)
         {
             rigidbodyPlayer.AddForce(new Vector2(0, playerJumpForce));

@@ -13,7 +13,7 @@ public class PlayerController : CharacterBase
     [SerializeField]
     Animator playerAnimator;
     Rigidbody2D rigidbodyPlayer;
-    BoxCollider2D colliderPlayer;
+    CapsuleCollider2D colliderPlayer;
     Vector3 positionRight;
     Vector3 positionLeft;
    
@@ -33,13 +33,21 @@ public class PlayerController : CharacterBase
     void Start()
     {
         rigidbodyPlayer = GetComponent<Rigidbody2D>();
-        colliderPlayer = GetComponent<BoxCollider2D>();
+        colliderPlayer = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        
+        #region Pulo
+
+        if (Input.GetKey(KeyCode.W) && isPlataform())
+        {
+            rigidbodyPlayer.AddForce(new Vector2(0, playerJumpForce));
+        }
+
+        #endregion
+
         #region Movimentação
 
         if (Input.GetKey(KeyCode.D))
@@ -47,7 +55,7 @@ public class PlayerController : CharacterBase
             rigidbodyPlayer.velocity = new Vector2(playerSpeed, rigidbodyPlayer.velocity.y);
             GetComponent<SpriteRenderer>().flipX = false;
         }
-        else if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             rigidbodyPlayer.velocity = new Vector2(-playerSpeed, rigidbodyPlayer.velocity.y);
             GetComponent<SpriteRenderer>().flipX = true;
@@ -63,16 +71,6 @@ public class PlayerController : CharacterBase
         }
 
         #endregion
-
-        #region Pulo
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            rigidbodyPlayer.AddForce(new Vector2(0, playerJumpForce * Time.deltaTime));
-        }
-
-        #endregion
-
     }
     
     public bool isPlataform()
@@ -80,7 +78,8 @@ public class PlayerController : CharacterBase
         Vector3 originCenter = transform.position;
         originCenter.y -= colliderPlayer.bounds.size.y / 2 + 0.01f;
 
-        RaycastHit2D centralHit = Physics2D.Raycast(originCenter, Vector3.down, 0.1f);
+        RaycastHit2D centralHit = Physics2D.Raycast(originCenter, Vector3.down, 0.2f);
+        Debug.DrawRay(originCenter, Vector3.down);
 
         if (centralHit.collider.gameObject.tag.Equals("Plataform"))
         {

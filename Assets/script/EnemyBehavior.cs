@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class EnemyBehavior : MonoBehaviour
+public class EnemyBehavior : CharacterBase
 {
 
     [SerializeField]
@@ -37,7 +37,7 @@ public class EnemyBehavior : MonoBehaviour
         }
         else
         {
-            enemyTransform.rotation = new Quaternion(0, 0, 180, 0);
+            enemyTransform.rotation = new Quaternion(0, 180, 0, 0);
             rigidBody.velocity = new Vector2(velocidade, rigidBody.velocity.y);
         }
         if (goLeft && !possivelIrEsquerda())

@@ -23,6 +23,7 @@ public class EnemyBehavior : CharacterBase
     // Use this for initialization
     void Start()
     {
+        this.currentLife = this.maxLife;
         enemyTransform = GetComponent<Transform>();
         rigidBody = GetComponent<Rigidbody2D>();
         characterCollider2 = GetComponent<CapsuleCollider2D>();     

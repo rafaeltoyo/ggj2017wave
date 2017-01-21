@@ -9,6 +9,8 @@ public class EnemyBehavior : CharacterBase
 
     [SerializeField]
     float velocidade;
+    [SerializeField]
+    int dano;
 
     bool goLeft = true;
     Rigidbody2D rigidBody;
@@ -24,7 +26,6 @@ public class EnemyBehavior : CharacterBase
         enemyTransform = GetComponent<Transform>();
         rigidBody = GetComponent<Rigidbody2D>();
         characterCollider2 = GetComponent<CapsuleCollider2D>();
-
     }
 
     // Update is called once per frame
@@ -42,7 +43,7 @@ public class EnemyBehavior : CharacterBase
         }
         if (goLeft && !possivelIrEsquerda())
             goLeft = false;
-        else if(!goLeft && !possivelIrDireita())
+        else if (!goLeft && !possivelIrDireita())
             goLeft = true;
     }
 
@@ -151,4 +152,12 @@ public class EnemyBehavior : CharacterBase
         return false;
     }
 
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag.Equals("Player"))
+        {
+            PlayerBehavior playerBehavior = coll.gameObject.GetComponent<PlayerBehavior>();
+            playerBehavior.onDamage(dano);
+        }
+    }
 }

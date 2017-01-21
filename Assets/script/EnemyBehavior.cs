@@ -2,59 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CapsuleCollider2D))]    
+[RequireComponent(typeof(CapsuleCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class EnemyBehavior : MonoBehaviour {
+public class EnemyBehavior : MonoBehaviour
+{
 
     [SerializeField]
     float velocidade;
 
-    bool irDireita = true;
+    bool goLeft = true;
     Rigidbody2D rigidBody;
     [SerializeField]
     string[] TagsParaIgnorar;
     CapsuleCollider2D characterCollider;
 
-
-    public bool temp_test;
+    Transform enemyTransform;
 
     // Use this for initialization
     void Start()
     {
+        enemyTransform = GetComponent<Transform>();
         rigidBody = GetComponent<Rigidbody2D>();
         characterCollider = GetComponent<CapsuleCollider2D>();
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (irDireita && checarDireita())
+        if (goLeft)
         {
-            rigidBody.velocity = new Vector2(velocidade, rigidBody.velocity.y);
-            transform.localRotation = Quaternion.Euler(0, 0, 0);
-            //GetComponent<SpriteRenderer>().flipX = true;
-        }
-        else if (irDireita)
-        {
-            irDireita = false;
-        }
-        else if (!irDireita && checarEsquerda())
-        {
+            enemyTransform.rotation = new Quaternion(0, 0, 0, 0);
             rigidBody.velocity = new Vector2(-velocidade, rigidBody.velocity.y);
-            GetComponent<SpriteRenderer>().flipX = false;
         }
-        else if (checarDireita())
+        else
         {
-            irDireita = true;
+            enemyTransform.rotation = new Quaternion(0, 0, 180, 0);
+            rigidBody.velocity = new Vector2(velocidade, rigidBody.velocity.y);
         }
-
-        //if (currentLife <= 0)
-        //{
-        //    Destroy(gameObject);
-        //}
+        if (goLeft && !possivelIrEsquerda())
+            goLeft = false;
+        else if(!goLeft && !possivelIrDireita())
+            goLeft = true;
     }
 
-    public bool checarDireita()
+    public bool possivelIrDireita()
     {
         Vector3 origem = transform.position;
         origem.y -= (characterCollider.bounds.size.y / 2 + 0.01f);
@@ -100,7 +92,7 @@ public class EnemyBehavior : MonoBehaviour {
         }
     }
 
-    public bool checarEsquerda()
+    public bool possivelIrEsquerda()
     {
         Vector3 origem = transform.position;
         origem.y -= (characterCollider.bounds.size.y / 2 + 0.01f);
@@ -158,5 +150,5 @@ public class EnemyBehavior : MonoBehaviour {
         }
         return false;
     }
-    
+
 }

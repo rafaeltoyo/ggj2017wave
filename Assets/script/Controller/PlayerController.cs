@@ -16,7 +16,9 @@ public class PlayerController : CharacterBase
     CapsuleCollider2D colliderPlayer;
     Vector3 positionRight;
     Vector3 positionLeft;
-   
+    bool IsGrounded = false;
+
+    Transform groundcheck;
 
     #region Repositorio
 
@@ -34,6 +36,7 @@ public class PlayerController : CharacterBase
     {
         rigidbodyPlayer = GetComponent<Rigidbody2D>();
         colliderPlayer = GetComponent<CapsuleCollider2D>();
+        groundcheck = transform.Find("Groundcheck");
     }
 
     // Update is called once per frame
@@ -41,7 +44,9 @@ public class PlayerController : CharacterBase
     {
         #region Pulo
 
-        if (Input.GetKey(KeyCode.W) && isPlataform())
+        IsGrounded = Physics2D.Linecast(transform.position, groundcheck.position, 1 << LayerMask.NameToLayer("Ground")); ;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, 0.1f); ;
+        if (Input.GetKey(KeyCode.W) && IsGrounded)
         {
             rigidbodyPlayer.AddForce(new Vector2(0, playerJumpForce));
         }
@@ -53,42 +58,53 @@ public class PlayerController : CharacterBase
         if (Input.GetKey(KeyCode.D))
         {
             rigidbodyPlayer.velocity = new Vector2(playerSpeed, rigidbodyPlayer.velocity.y);
-            GetComponent<SpriteRenderer>().flipX = false;
+            //GetComponent<SpriteRenderer>().flipX = false;
         }
         if (Input.GetKey(KeyCode.A))
         {
             rigidbodyPlayer.velocity = new Vector2(-playerSpeed, rigidbodyPlayer.velocity.y);
-            GetComponent<SpriteRenderer>().flipX = true;
+            //GetComponent<SpriteRenderer>().flipX = true;
         }
 
-        if (Input.GetKey(KeyCode.S) && isPlataform())
-        {
-            colliderPlayer.isTrigger = true;
-        }
-        else
-        {
-            colliderPlayer.isTrigger = false;
-        }
+        //if (Input.GetKey(KeyCode.S) && isPlataform())
+        //{
+        //    colliderPlayer.isTrigger = true;
+        //}
+        //else
+        //{
+        //    colliderPlayer.isTrigger = false;
+        //}
 
         #endregion
     }
     
-    public bool isPlataform()
+    //public bool isPlataform()
+    //{
+    //    Vector3 originCenter = transform.position;
+    //    originCenter.y -= colliderPlayer.bounds.size.y / 2 + 0.01f;
+
+    //    RaycastHit2D centralHit = Physics2D.Raycast(originCenter, Vector3.down, 0.2f);
+    //    Debug.DrawRay(originCenter, Vector3.down);
+
+    //    if (centralHit.collider.gameObject.tag.Equals("Plataform"))
+    //    {
+    //        return true;
+    //    }
+    //    else
+    //    {
+    //        return false;
+    //    }
+    //}
+
+    void OnCollisionEnter(Collision collisionInfo)
     {
-        Vector3 originCenter = transform.position;
-        originCenter.y -= colliderPlayer.bounds.size.y / 2 + 0.01f;
-
-        RaycastHit2D centralHit = Physics2D.Raycast(originCenter, Vector3.down, 0.2f);
-        Debug.DrawRay(originCenter, Vector3.down);
-
-        if (centralHit.collider.gameObject.tag.Equals("Plataform"))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        IsGrounded = true;
     }
-    
+
+    void OnCollisionExit(Collision collisionInfo)
+    {
+        IsGrounded = false;
+    }
+
+
 }

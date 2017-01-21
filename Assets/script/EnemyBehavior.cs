@@ -14,7 +14,7 @@ public class EnemyBehavior : CharacterBase
     Rigidbody2D rigidBody;
     [SerializeField]
     string[] TagsParaIgnorar;
-    CapsuleCollider2D characterCollider;
+    CapsuleCollider2D characterCollider2;
 
     Transform enemyTransform;
 
@@ -23,7 +23,7 @@ public class EnemyBehavior : CharacterBase
     {
         enemyTransform = GetComponent<Transform>();
         rigidBody = GetComponent<Rigidbody2D>();
-        characterCollider = GetComponent<CapsuleCollider2D>();
+        characterCollider2 = GetComponent<CapsuleCollider2D>();
 
     }
 
@@ -49,15 +49,15 @@ public class EnemyBehavior : CharacterBase
     public bool possivelIrDireita()
     {
         Vector3 origem = transform.position;
-        origem.y -= (characterCollider.bounds.size.y / 2 + 0.01f);
+        origem.y -= (characterCollider2.bounds.size.y / 2 + 0.01f);
         Vector3 origemChao = origem;
-        origemChao.x += (characterCollider.bounds.size.x / 2 + 0.15f);
+        origemChao.x += (characterCollider2.bounds.size.x / 2 + 0.15f);
         Vector3 origemCentro = transform.position;
-        origemCentro.x += characterCollider.bounds.size.x / 2 + 0.01f;
+        origemCentro.x += characterCollider2.bounds.size.x / 2 + 0.01f;
         Vector3 origemBaixo = origemCentro;
-        origemBaixo.y -= characterCollider.bounds.size.y / 2;
+        origemBaixo.y -= characterCollider2.bounds.size.y / 2;
         Vector3 origemSuperior = origemCentro;
-        origemSuperior.y += characterCollider.bounds.size.y / 2;
+        origemSuperior.y += characterCollider2.bounds.size.y / 2;
 
         Debug.DrawRay(origemChao, Vector3.down, Color.red);
         Debug.DrawRay(origemBaixo, Vector3.right, Color.yellow);
@@ -95,15 +95,15 @@ public class EnemyBehavior : CharacterBase
     public bool possivelIrEsquerda()
     {
         Vector3 origem = transform.position;
-        origem.y -= (characterCollider.bounds.size.y / 2 + 0.01f);
+        origem.y -= (characterCollider2.bounds.size.y / 2 + 0.01f);
         Vector3 origemChao = origem;
-        origemChao.x -= (characterCollider.bounds.size.x / 2 + 0.15f);
+        origemChao.x -= (characterCollider2.bounds.size.x / 2 + 0.15f);
         Vector3 origemCentro = transform.position;
-        origemCentro.x -= characterCollider.bounds.size.x / 2 + 0.01f;
+        origemCentro.x -= characterCollider2.bounds.size.x / 2 + 0.01f;
         Vector3 origemBaixo = origemCentro;
-        origemBaixo.y -= characterCollider.bounds.size.y / 2;
+        origemBaixo.y -= characterCollider2.bounds.size.y / 2;
         Vector3 origemSuperior = origemCentro;
-        origemSuperior.y += characterCollider.bounds.size.y / 2;
+        origemSuperior.y += characterCollider2.bounds.size.y / 2;
 
         Debug.DrawRay(origemChao, Vector3.down, Color.red);
         Debug.DrawRay(origemBaixo, Vector3.left, Color.yellow);

@@ -9,7 +9,11 @@ public class ShotWaveBehaviour : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        Instantiate(projectile, transform.position, transform.rotation);
+        
+        for(int i = -7; i <= 7; i++)
+        {
+            Instantiate(projectile, transform.position, Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + i*1));
+        }
         Destroy(gameObject, 2);
     }
 	

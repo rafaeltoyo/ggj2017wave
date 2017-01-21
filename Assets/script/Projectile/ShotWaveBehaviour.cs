@@ -9,7 +9,7 @@ public class ShotWaveBehaviour : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        Instantiate(projectile, transform.position, Quaternion.AngleAxis(30, transform.rotation.eulerAngles));
+        Instantiate(projectile, transform.position, transform.rotation);
         Destroy(gameObject, 2);
     }
 	

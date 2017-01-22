@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
 
     public void clickNovoJogo()
     {
-        SceneManager.LoadScene("Fase 1");
+        SceneManager.LoadScene("Inicial");
     }
 
     public void clickSair()

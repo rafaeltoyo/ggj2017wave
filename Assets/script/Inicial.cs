@@ -21,4 +21,9 @@ public class Inicial : MonoBehaviour {
         }
         Tempo -= Time.deltaTime;	
 	}
+
+    public void Pular()
+    {
+        SceneManager.LoadScene("Fase 1");
+    }
 }

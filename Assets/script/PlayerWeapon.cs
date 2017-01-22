@@ -15,19 +15,23 @@ public class PlayerWeapon : MonoBehaviour {
 
     float weaponDistance;
 
+    private PlayerBehavior character;
+
     void Start()
     {
         // playerData = GetComponentInParent<PlayerBehaviour>();
         weaponDistance = 0.3f; // Raio de distancia entre a arma e o player
+        character = GetComponent<PlayerBehavior>();
     }
 
     // Update is called once per frame
     void Update() {
         updateWeaponPosition();
 
-        if(Input.GetMouseButtonDown(0) && Time.timeScale > 0)
+        if(Input.GetMouseButtonDown(0) && character.getEnergy() >= 30 && Time.timeScale > 0)
         {
             Instantiate(projectile, playerWeapon.transform.position, Quaternion.Euler(0,0,Mathf.Atan2(angle.y,angle.x) * Mathf.Rad2Deg));
+            character.useEnergy(30);
         }
     }
 

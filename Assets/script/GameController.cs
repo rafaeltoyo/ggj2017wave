@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public static GameController instancia;
-    public GameObject TelaPause;
+    [SerializeField]
+    private GameObject TelaPause;
+    [SerializeField]
+    private GameObject Player;
 
     private bool jogoPausado = false;
 
@@ -21,6 +24,13 @@ public class GameController : MonoBehaviour
             pausarJogo();
         else if (Input.GetKeyDown(KeyCode.Escape) && jogoPausado)
             voltarJogo();
+
+        if (Player != null)
+        {
+            PlayerBehavior playerBehavior = Player.GetComponent<PlayerBehavior>();
+            if (playerBehavior != null && playerBehavior.tookhit)
+                SceneManager.LoadScene("Game Over");
+        }
     }
 
     public void clickNovoJogo()

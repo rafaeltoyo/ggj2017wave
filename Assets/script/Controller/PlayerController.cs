@@ -37,6 +37,7 @@ public class PlayerController : CharacterBase
         rigidbodyPlayer = GetComponent<Rigidbody2D>();
         colliderPlayer = GetComponent<CapsuleCollider2D>();
         groundcheck = transform.Find("Groundcheck");
+        playerAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -44,7 +45,8 @@ public class PlayerController : CharacterBase
     {
         #region Pulo
 
-        IsGrounded = Physics2D.Linecast(transform.position, groundcheck.position, 1 << LayerMask.NameToLayer("Ground")); ;
+        IsGrounded = Physics2D.Linecast(transform.position, groundcheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        playerAnimator.SetBool("grounded", IsGrounded);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, 0.1f); ;
         if (Input.GetKey(KeyCode.W) && IsGrounded)
         {
@@ -58,13 +60,18 @@ public class PlayerController : CharacterBase
         if (Input.GetKey(KeyCode.D))
         {
             rigidbodyPlayer.velocity = new Vector2(playerSpeed, rigidbodyPlayer.velocity.y);
-            //GetComponent<SpriteRenderer>().flipX = false;
+            GetComponent<SpriteRenderer>().flipX = false;
         }
         if (Input.GetKey(KeyCode.A))
         {
             rigidbodyPlayer.velocity = new Vector2(-playerSpeed, rigidbodyPlayer.velocity.y);
-            //GetComponent<SpriteRenderer>().flipX = true;
+            GetComponent<SpriteRenderer>().flipX = true;
         }
+
+        if (rigidbodyPlayer.velocity.x != 0) playerAnimator.SetBool("moving", true);
+        else playerAnimator.SetBool("moving", false);
+
+        playerAnimator.SetFloat("velY", rigidbodyPlayer.velocity.y);
 
         //if (Input.GetKey(KeyCode.S) && isPlataform())
         //{
@@ -75,7 +82,7 @@ public class PlayerController : CharacterBase
         //    colliderPlayer.isTrigger = false;
         //}
 
-        #endregion
+            #endregion
     }
     
     //public bool isPlataform()

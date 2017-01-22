@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class RatEnemyBehaviour : EnemyBehavior
 {
 

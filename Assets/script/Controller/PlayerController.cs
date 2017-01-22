@@ -45,27 +45,37 @@ public class PlayerController : MonoBehaviour
     {
         #region Pulo
 
-        IsGrounded = Physics2D.Linecast(transform.position, groundcheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        if(rigidbodyPlayer.velocity.y <= 0f)
+            IsGrounded = Physics2D.Linecast(transform.position, groundcheck.position, 1 << LayerMask.NameToLayer("Ground"));
         playerAnimator.SetBool("grounded", IsGrounded);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, 0.1f); ;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.01f); ;
         if (Input.GetKey(KeyCode.W) && IsGrounded)
         {
             rigidbodyPlayer.AddForce(new Vector2(0, playerJumpForce));
+            IsGrounded = false;
         }
 
         #endregion
 
         #region Movimentação
 
-        if (Input.GetKey(KeyCode.D))
+        if(Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A))
+        {
+            rigidbodyPlayer.velocity = new Vector2(0f, rigidbodyPlayer.velocity.y);
+        }
+        else if (Input.GetKey(KeyCode.D))
         {
             rigidbodyPlayer.velocity = new Vector2(playerSpeed, rigidbodyPlayer.velocity.y);
             GetComponent<SpriteRenderer>().flipX = false;
         }
-        if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A))
         {
             rigidbodyPlayer.velocity = new Vector2(-playerSpeed, rigidbodyPlayer.velocity.y);
             GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else
+        {
+            rigidbodyPlayer.velocity = new Vector2(0f, rigidbodyPlayer.velocity.y);
         }
 
         if (rigidbodyPlayer.velocity.x != 0) playerAnimator.SetBool("moving", true);

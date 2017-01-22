@@ -25,12 +25,12 @@ public class RatEnemyBehaviour : EnemyBehavior
     {
         if (goLeft)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            GetComponent<SpriteRenderer>().flipX = false;
             rigidBody.velocity = new Vector2(-velocidade, rigidBody.velocity.y);
         }
         else
         {
-            GetComponent<SpriteRenderer>().flipX = false;
+            GetComponent<SpriteRenderer>().flipX = true;
             rigidBody.velocity = new Vector2(velocidade, rigidBody.velocity.y);
         }
         // Flipar o personagem se possivel

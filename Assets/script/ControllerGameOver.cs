@@ -7,7 +7,8 @@ public class ControllerGameOver : MonoBehaviour {
 
     [SerializeField]
     float duracaoTela;
-    
+
+    bool flag = true;
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +18,10 @@ public class ControllerGameOver : MonoBehaviour {
 	void Update () {
         ControllerGameOver cont = Camera.main.GetComponent<ControllerGameOver>();
         cont.duracaoTela -= Time.deltaTime;
-        if (cont.duracaoTela <= 0)
+        if (cont.duracaoTela <= 0 && flag)
+        {
+            flag = false;
             SceneManager.LoadScene("Menu");
+        }
 	}
 }

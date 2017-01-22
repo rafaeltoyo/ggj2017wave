@@ -29,13 +29,14 @@ public class GameController : MonoBehaviour
         {
             PlayerBehavior playerBehavior = Player.GetComponent<PlayerBehavior>();
             if (playerBehavior != null && playerBehavior.tookhit)
-                SceneManager.LoadScene("Game Over");
+                SceneManager.LoadScene("GameOver");
+            
         }
     }
 
     public void clickNovoJogo()
     {
-        SceneManager.LoadScene("TesteDiogo");
+        SceneManager.LoadScene("Fase 1");
     }
 
     public void clickSair()

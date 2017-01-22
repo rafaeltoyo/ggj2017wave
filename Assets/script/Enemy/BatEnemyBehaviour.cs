@@ -51,7 +51,7 @@ public class BatEnemyBehaviour : EnemyBehavior {
         Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position;
         playerPosition = playerPosition - transform.position;
 
-        if (playerPosition.magnitude >= 6)
+        if (playerPosition.magnitude >= 8)
             return;
 
         playerPosition = playerPosition.normalized;

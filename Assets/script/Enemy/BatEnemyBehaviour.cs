@@ -46,8 +46,14 @@ public class BatEnemyBehaviour : EnemyBehavior {
 
     void randomDirection ()
     {
+        direction = new Vector3(0, 0, 0);
+
         Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position;
         playerPosition = playerPosition - transform.position;
+
+        if (playerPosition.magnitude >= 6)
+            return;
+
         playerPosition = playerPosition.normalized;
 
         direction = new Vector3(Random.Range(-1f,1f) + 1.5f*playerPosition.x, Random.Range(-1f, 1f) + 1.5f*playerPosition.y, 0f);

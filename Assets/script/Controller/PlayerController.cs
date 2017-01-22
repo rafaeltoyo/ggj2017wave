@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
         if(rigidbodyPlayer.velocity.y <= 0f)
             IsGrounded = Physics2D.Linecast(transform.position, groundcheck.position, 1 << LayerMask.NameToLayer("Ground"));
         playerAnimator.SetBool("grounded", IsGrounded);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.01f); ;
         if (Input.GetKey(KeyCode.W) && IsGrounded)
         {
             rigidbodyPlayer.AddForce(new Vector2(0, playerJumpForce));

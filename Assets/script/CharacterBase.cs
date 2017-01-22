@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CharacterBase : MonoBehaviour {
 
+    [SerializeField]
     protected int currentLife;
     [SerializeField]
     protected int maxLife;
@@ -13,13 +14,14 @@ public class CharacterBase : MonoBehaviour {
 
     void Awake ()
     {
-        currentLife = maxLife;
     }
 
 	// Use this for initialization
 	void Start () {
         //characterCollider = GetComponent<BoxCollider2D>();
-	}
+        currentLife = maxLife;
+
+    }
 
     public int getLife() { return currentLife; }
     public int getMaxLife() { return maxLife; }

@@ -6,11 +6,12 @@ public class PlayerBehavior : CharacterBase {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        this.currentLife = this.maxLife;
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }
